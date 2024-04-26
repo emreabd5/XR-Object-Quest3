@@ -6,7 +6,7 @@ run_duration = 3600  # Set the server to run for 1 hour (3600 seconds)
 
 # Set up the server
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(('192.168.0.114', 12345))  # Bind to localhost on port 12345
+server.bind(('192.168.0.xxx', 12345))  # Bind to localhost on port 12345
 server.listen(1)
 print("Waiting for a connection...")
 
