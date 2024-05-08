@@ -218,10 +218,10 @@ public class AutoRayCast : MonoBehaviour
 
         // No existing sphere is close enough, so create a new one
         GameObject hitIndicator = Instantiate(previewPrefab, hitPositionYolo, transform.rotation);
-        // TextDisplay display = hitIndicator.GetComponent<TextDisplay>();
-        //if (display != null)
-         //   display.SetText(textToShow);
         hitIndicator.transform.localScale = Vector3.one * 0.03f;
+        TextMeshPro textMeshPro = hitIndicator.GetComponent<TextMeshPro>();
+        textMeshPro.text = "text"+ UnityEngine.Random.Range(0, 100).ToString();
+
         if (!useOcclusionMaterial)
             hitIndicator.GetComponent<MeshRenderer>().material = NoOcclusion;
         hits.Add(hitIndicator);
