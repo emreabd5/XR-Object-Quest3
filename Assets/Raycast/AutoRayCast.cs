@@ -220,8 +220,8 @@ public class AutoRayCast : MonoBehaviour
         GameObject hitIndicator = Instantiate(previewPrefab, hitPositionYolo, transform.rotation);
         hitIndicator.transform.localScale = Vector3.one * 0.03f;
         TextMeshPro textMeshPro = hitIndicator.GetComponent<TextMeshPro>();
-        textMeshPro.text = "text"+ UnityEngine.Random.Range(0, 100).ToString();
-
+        textMeshPro.text = "Object: " + textToShow;
+        
         if (!useOcclusionMaterial)
             hitIndicator.GetComponent<MeshRenderer>().material = NoOcclusion;
         hits.Add(hitIndicator);
