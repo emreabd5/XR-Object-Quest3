@@ -24,8 +24,9 @@ classNames = [
 model = YOLO('yolov8n.pt')
 
 def visualize(img, results, conn):
+    mybool=True
     """Draw bounding boxes and labels on the image, and send detections to the client."""
-    screen_width, screen_height = 3840, 2160  # Adjust these values based on your actual screen resolution
+    screen_width, screen_height = 3024, 1964  # Adjust these values based on your actual screen resolution
     for result in results:
         boxes = result.boxes
         for box in boxes:
@@ -36,14 +37,15 @@ def visualize(img, results, conn):
             cv2.putText(img, name, (xc - w//2, yc - h//2 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
             # Normalize coordinates
-            normalized_x = ((xc + w/2) / screen_width * 4128)
-            normalized_y = ((yc + h/2) / screen_height * 2208)
+            normalized_x = ((xc + w/2) / screen_width)
+            normalized_y = 1 - ((yc + h/2) / screen_height)
 
             if conn:
                 # Create the string to send, including normalized coordinates and the detected object class name
                 coordinates = f"{normalized_x},{normalized_y},{name}\n"
                 conn.sendall(coordinates.encode('utf-8'))
-    return img
+                mybool=False
+    return mybool
 
 def server_setup():
     """Setup the server socket to listen for connections."""
@@ -71,8 +73,10 @@ def run_detection():
             results = model(frame, imgsz=640, conf=0.6)
 
             # Visualize results and send detections
-            frame = visualize(frame, results, conn)
-            cv2.imshow(window_name, frame)
+            mybool = visualize(frame, results, conn)
+            if mybool==False:
+                break
+
 
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
