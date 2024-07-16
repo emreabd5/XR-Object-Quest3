@@ -169,7 +169,7 @@ public class AutoRayCast : MonoBehaviour
         preview = null;
 
         // Print the position where the sphere is placed
-        Debug.Log($"Single Scan Sphere Placed at: World: {hit}, Viewport: {viewSpaceCoordinate}");
+        Debug.Log($"Single Scan Sphere Placed at: World: {hit}, Viewport: {viewSpaceCoordinate}, Depth: {depth}");
     }
 
     private GameObject FindClosestSphere(Vector3 position)
@@ -198,14 +198,18 @@ public class AutoRayCast : MonoBehaviour
         // Convert screen coordinates to viewport
         Vector2 viewportPosition = new Vector2(centerX, centerY);
 
+        // Scale the normalized coordinates from the Meta Casting resolution to the Unity camera resolution
+        viewportPosition.x *= (1280.0f / 3024.0f);
+        viewportPosition.y *= (720.0f / 1964.0f);
+
         // Perform ray cast
         float depth = depthAccess.RaycastViewSpaceBlocking(viewportPosition);
-        Vector3 RealWorldCoordinates = cameraT.ViewportToWorldPoint(new Vector3(centerX, centerY, depth));
+        Vector3 RealWorldCoordinates = cameraT.ViewportToWorldPoint(new Vector3(viewportPosition.x, viewportPosition.y, depth));
         
         // Here, replace newHitPosition with hitPosition since that's the correct variable name
         Vector3 hitPositionYolo = hitPosition(depth, RealWorldCoordinates);
 
-        Debug.Log($"Depth: {depth}, World Coordinates: {RealWorldCoordinates}, Hit Position: {hitPositionYolo}");
+        Debug.Log($"Viewport for YOLO: {viewportPosition}, Depth for YOLO: {depth}, World Coordinates for YOLO: {RealWorldCoordinates}, Hit Position for YOLO: {hitPositionYolo}");
 
         // Check if a sphere is already placed close to the new hit position
         GameObject existingSphere = FindClosestSphere(hitPositionYolo);
