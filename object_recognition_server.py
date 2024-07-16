@@ -37,8 +37,9 @@ def visualize(img, results, conn):
             cv2.putText(img, name, (xc - w//2, yc - h//2 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
             # Normalize coordinates
-            normalized_x = ((xc + w/2) / screen_width)
-            normalized_y = 1 - ((yc + h/2) / screen_height)
+            normalized_x = ((xc) / screen_width)
+            normalized_y = 1 - ((yc) / screen_height)
+            print(normalized_x,normalized_y)
 
             if conn:
                 # Create the string to send, including normalized coordinates and the detected object class name
@@ -50,7 +51,7 @@ def visualize(img, results, conn):
 def server_setup():
     """Setup the server socket to listen for connections."""
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(('192.168.1.112', 12345))  # Bind to IP and port that you want to listen on
+    s.bind(('192.168.0.114', 12345))  # Bind to IP and port that you want to listen on
     s.listen(1)
     print("Server ready and listening for connections...")
     conn, addr = s.accept()
@@ -65,7 +66,7 @@ def run_detection():
 
     try:
         while True:
-            img = ImageGrab.grab(bbox=(0, 0, 3840, 2160))  # Adjust bbox according to your screen resolution
+            img = ImageGrab.grab(bbox=(0, 0, 3024, 1964))  # Adjust bbox according to your screen resolution
             img_np = np.array(img)
             frame = cv2.cvtColor(img_np, cv2.COLOR_RGB2BGR)
 
