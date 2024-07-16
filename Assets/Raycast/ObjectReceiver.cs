@@ -15,7 +15,7 @@ public class ObjectReceiver : MonoBehaviour
     {
         try
         {
-            client = new TcpClient("192.168.1.112", 12345);
+            client = new TcpClient("192.168.0.114", 12345);
             stream = client.GetStream();
         }
         catch (Exception ex)
