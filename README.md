@@ -9,3 +9,7 @@ In the ObjectReceiver.cs code, the only change you must do is that changing the 
 In the AutoRaycast.cs code, again you have to adjust screen resolution in 202nd and 203rd line of the code. Since we are using Meta Casting app to detect the objects and its resolution is 1280x720, we have used these information in these lines of the code too.
 
 In our Python code, we are capturing our laptop screen, so to see the Quest3's video, we are using Meta Casting. The user must open the Meta Casting in the fullscreen after running the Python code.
+
+To start the application, firstly one has to run the Python code, after that one should open the application from Quest3. Python automatically connects with Unity and starts sending object coordinates.
+
+
